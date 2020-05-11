@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Website in Development</title>
+        <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+    %if logued:
+        <div class="aux" id="data">
+            <h1>Hi, {{ logued['name'] }} </h1>
+            <form method="post" action="/editProfile">
+                <label for "username"> username </label>
+                <input name="username" type="text" value={{ logued['name'] }}></input>
+
+                <label for "rol"> Rol: {{ logued['type'] }} </label>
+                <br/>
+                <input type="submit"value="Actualizar perfil" >
+            </form>
+            
+            <form method="post" action="/logout">
+                <input type="submit"value="Log out" >
+            </form>
+
+        </div>
+
+</body>
+</html
