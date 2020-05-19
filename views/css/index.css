@@ -7,19 +7,19 @@ body{
 /*Estilo correspondiente al login*/
 /*Parte necesaria para que se redimensione el login al disminuir el tamaño de la pestaña*/
 @media(min-width:1317px){
-    .aux{
+    #login, #regForm, #data{
         width: 320px;
         position: absolute;
     }
 }
 @media(max-width:1317px){
-    .aux{
+    #login, #regForm, #data{
         width: 100%;
         position: relative;
     }
 }
 
-.aux{
+#login, #data{
     height: 420px;
     background: #000;
     /*Color de la letra*/
@@ -30,7 +30,18 @@ body{
     padding: 40px 30px;
 }
 
-.aux label{
+#regForm{
+    height: 500px !important;
+    background: #000;
+    /*Color de la letra*/
+    color: #fff;
+    box-sizing: border-box;
+    margin-left: 40%;
+    margin-top: 10%;
+    padding: 40px 30px;
+}
+
+#login label, #regForm label, #data label{
     margin: 0;
     padding: 0;
     font-weight: bold;
@@ -38,12 +49,12 @@ body{
     display: block;
 }
 
-.aux input{
+#login input, #regForm input, #data input{
     width: 100%;
     margin-bottom: 20px;
 }
 
-.aux input[type="text"], .aux input[type="password"]{
+#login input[type="text"], #login input[type="password"], #regForm input[type="text"], #regForm input[type="password"],#data input[type="text"], #data input[type="password"]{
     border:none;
     border-bottom: 1px solid #fff;
     background: transparent;
@@ -53,7 +64,7 @@ body{
     font-size: 16px;
 }
 
-.aux input[type="submit"]{
+#login input[type="submit"], #regForm input[type="submit"],#data input[type="submit"]{
     border: none;
     outline: none;
     height: 40px;
@@ -63,7 +74,7 @@ body{
     border-radius: 20px;
 }
 
-.aux input[type="button"]{
+#login input[type="button"], #regForm input[type="button"],#data input[type="button"]{
     border: none;
     outline: none;
     height: 40px;
@@ -73,23 +84,29 @@ body{
     border-radius: 20px;
 }
 
-.aux input[type="submit"]:hover{
+#login input[type="submit"]:hover, #regForm input[type="submit"]:hover,#data input[type="submit"]:hover{
     background-color: #FFA420; 
 }
-.aux h1{
+
+#login h1, #regForm h1, #data h1{
     margin 0;
     padding 0 0 20px;
     text-align: center;
     font-size: 22px;
 }
 
-.aux a{
+#login a,#regForm a,#data a{
     text-decoration: none;
     color: darkgrey;
     font-size: 12px;
     line-height: 20px;
 }
+
 /*Hover hace que al pasar el ratón por encima cambie de color*/
-.aux a:hover{
+#login a:hover, #regForm a:hover,  #data a:hover{
     color: #FAD201;
+}
+
+#regForm{
+    display: none;
 }

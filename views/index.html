@@ -6,10 +6,11 @@
         <title>Website in Development</title>
         <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
         <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
 
-    <div class="aux">
+    <div  id="login">
         <h1>Login here</h1>
         <form method="post" action="/login">
             <label for "name"> Username </label>
@@ -18,8 +19,32 @@
             <label for "password"> Password </label>
             <input name="password" type="password" placeholder="Enter Password"></input>
             <input type="submit" value="Log In">
-
+            <input type="button" value="Sing Up" onclick="mostrarRegistro()">
             <a href="#"> I forgot my password </a>
 
         </form>
     </div>
+
+
+    <div id="regForm">
+        <h1>Sing up</h1>
+        <form method="post" action="/users">
+            <label for "name"> Username </label>
+            <input name="name" type="text" placeholder="Enter Username"></input>
+
+            <label for "password"> Password </label>
+            <input name="password" type="password" placeholder="Enter Password"></input>
+
+            <label for "confirm_password"> Confirm password </label>
+            <input name="confirm_password" type="password" placeholder="Enter Password"></input>
+
+            <label for "email"> Email </label>
+            <input name="email" type="text" placeholder="Enter email"></input>
+
+            <!--Utilizo la etiqueta submit para el botón de registrarse-->
+            <input type="submit" value="Sing Up">
+
+        </form>
+    </div>
+
+    </body>

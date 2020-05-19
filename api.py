@@ -2,6 +2,22 @@ from bottle import *
 import bottle_session
 import bottle
 import beaker.middleware
+from bottle.ext import sqlalchemy
+from sqlalchemy import create_engine, Column, Integer, Sequence, String
+from sqlalchemy.ext.declarative import declarative_base
+
+import MySQLdb
+
+db = MySQLdb.connect(host="127.0.0.1",    # tu host, usualmente localhost
+                     user="miguelAngel",         # tu usuario
+                     passwd="practicasSIBW",  # tu password
+                     db="Prueba")        # el nombre de la base de datos
+
+db.autocommit = True
+
+#Debes crear un objeto Cursor. Te permitira ejecutar todos los queries que necesitas
+cur = db.cursor()
+
 
 session_opts = {
     'session.type': 'file',
@@ -12,14 +28,6 @@ session_opts = {
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 
 
-
-users = [{'name' : 'illomigue', 'type' : 'superuser','password' : '1234' },
-          {'name' : 'd3vcho', 'type' : 'superuser','password' : '1234'},
-          {'name' : 'Direkk', 'type' : 'standard','password' : '1234'},
-          {'name' : 'corderop', 'type' : 'standard','password' : '1234'},
-          {'name' : 'currobeltran', 'type' : 'standard','password' : '1234'}]
-
-
 #Antes de atender cualquier peticion, almacenamos la sesion de beaker en request.session, es el equivalente a session_start() que utilizamos en php
 @hook('before_request')
 def setup_request():
@@ -28,14 +36,11 @@ def setup_request():
 
 @get('/')
 def index():
-    if 'logued' in request.environ['beaker.session']:
-        if request.environ['beaker.session']['logued'] == False :
+    if 'loged' in request.environ['beaker.session']:
+        if request.environ['beaker.session']['loged'] == False :
             return template('views/index')
         else:
-            for user in users:
-                if user['name'] == request.session['username']:
-                    logued = user
-            return template('views/usuario',logued=logued)
+            return template('views/usuario',loged=request.environ['beaker.session']['user'])
     else:
         return template('views/index')
 
@@ -43,6 +48,11 @@ def index():
 @get('/<filename:re:.*\.css>')
 def stylesheets(filename):
     return static_file(filename, root='views/css/')
+
+#Enlazar el javascript
+@get('/<filename:re:.*\.js>')
+def stylesheets(filename):
+    return static_file(filename, root='views/scripts/')
 
 
 
@@ -60,25 +70,29 @@ def getUser(name):
         
     return search
 
-
-#Esta funcion recibe un objeto en formato JSON
 @post('/users')
-def addUser():
-    new_user = {'name' : request.forms.get('name'), 'type' : request.forms.get('type')}
-    users.append(new_user)
-    return {'users' : users}
+def registro():
+    if request.forms.get('password') == request.forms.get('confirm_password'):
+        user = request.forms.get('name')
+        password = request.forms.get('password')
+        email = request.forms.get('email')
+        cur.execute("insert into usuarios(user, password, email) values (%s, %s, %s)",((user, password, email)))
+        db.commit()
+    else:
+        return '<h1>Algo ha salido mal :(</h1>'
+
 
 @post('/login')
 def login():
     log_user = {'name' : request.forms.get('name'), 'password' : request.forms.get('password')}
-    for user in users:
-        if user['name'] == log_user['name'] and user['password'] == log_user['password'] :
-            logued = user
-            request.environ['beaker.session']['username'] = log_user['name']
-            request.environ['beaker.session']['logued'] = True 
-            return template('views/usuario',logued=logued)
-        
-    return '404 not found'
+    cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(log_user['name'],log_user['password']))
+    user =  cur.fetchone()
+    if user != None:
+        request.environ['beaker.session']['user'] = user
+        request.environ['beaker.session']['loged'] = True 
+        return template('views/usuario',loged=user)
+    else:         
+        return '404 not found'
 
 
 @post('/logout')
@@ -102,8 +116,9 @@ def deleteUser(name):
 
 
 
-
-bottle.run(app=app,debug=True, reloader=True)
+port = 5000
+host = "localhost"
+bottle.run(app=app,debug=True, reloader=True, host=host, port=port)
 
 
 
