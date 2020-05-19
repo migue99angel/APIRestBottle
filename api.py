@@ -56,20 +56,6 @@ def stylesheets(filename):
 
 
 
-@get('/users')
-def getAll():
-    return {'users' : users}
-
-
-@get('/users/<name>')
-def getUser(name):
-    search = {'' : '', '' : ''}
-    for user in users:
-        if(user['name'] == name):
-            search = user
-        
-    return search
-
 @post('/users')
 def registro():
     if request.forms.get('password') == request.forms.get('confirm_password'):
@@ -100,19 +86,6 @@ def logout():
     request.environ['beaker.session'].delete()
     return template('views/index')
 
-
-
-@delete('/users/<name>')
-def deleteUser(name):
-    search = {'' : '', '' : ''}
-    for user in users:
-        if(user['name'] == name):
-            search = user
-
-    if(search.get('name') == ''):        
-        users.remove(search)
-
-    return {'users' : users}
 
 
 
