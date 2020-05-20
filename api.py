@@ -1,22 +1,10 @@
 from bottle import *
-import bottle_session
 import bottle
 import beaker.middleware
-from bottle.ext import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, Sequence, String
-from sqlalchemy.ext.declarative import declarative_base
+from conexionDB import *
+from Usuario import *
 
-import MySQLdb
-
-db = MySQLdb.connect(host="127.0.0.1",    # tu host, usualmente localhost
-                     user="miguelAngel",         # tu usuario
-                     passwd="practicasSIBW",  # tu password
-                     db="Prueba")        # el nombre de la base de datos
-
-db.autocommit = True
-
-#Debes crear un objeto Cursor. Te permitira ejecutar todos los queries que necesitas
-cur = db.cursor()
+base = conexionDB() #Creo la conexion con la base de datos
 
 
 session_opts = {
@@ -36,11 +24,11 @@ def setup_request():
 
 @get('/')
 def index():
-    if 'loged' in request.environ['beaker.session']:
-        if request.environ['beaker.session']['loged'] == False :
+    if 'logged' in request.environ['beaker.session']:
+        if request.environ['beaker.session']['logged'] == False :
             return template('views/index')
         else:
-            return template('views/usuario',loged=request.environ['beaker.session']['user'])
+            return template('views/usuario',logged=request.environ['beaker.session']['user'])
     else:
         return template('views/index')
 
@@ -62,21 +50,21 @@ def registro():
         user = request.forms.get('name')
         password = request.forms.get('password')
         email = request.forms.get('email')
-        cur.execute("insert into usuarios(user, password, email) values (%s, %s, %s)",((user, password, email)))
-        db.commit()
+        base.registrarUsuario(user,password,email)
+        
     else:
         return '<h1>Algo ha salido mal :(</h1>'
 
 
 @post('/login')
 def login():
-    log_user = {'name' : request.forms.get('name'), 'password' : request.forms.get('password')}
-    cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(log_user['name'],log_user['password']))
-    user =  cur.fetchone()
+    datos_usuario = base.login(request.forms.get('name'), request.forms.get('password'))
+    if datos_usuario != None:
+        user = Usuario(datos_usuario[0],datos_usuario[1],datos_usuario[2])
     if user != None:
         request.environ['beaker.session']['user'] = user
-        request.environ['beaker.session']['loged'] = True 
-        return template('views/usuario',loged=user)
+        request.environ['beaker.session']['logged'] = True 
+        return template('views/usuario',logged=user)
     else:         
         return '404 not found'
 
@@ -85,6 +73,13 @@ def login():
 def logout():
     request.environ['beaker.session'].delete()
     return template('views/index')
+
+
+@post('/publicaciones')
+def publicar():
+    contenido = request.forms.get('contenido')
+    base.addPublicacion(request.environ['beaker.session']['user'],contenido)
+    index()
 
 
 

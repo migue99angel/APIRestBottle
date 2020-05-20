@@ -8,23 +8,30 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-    %if loged:
-        <div id="data">
-            <h1>Hi, {{ loged[0] }} </h1>
-            <form method="post" action="/editProfile">
-                <label for "username"> username </label>
-                <input name="username" type="text" value={{ loged[0] }}></input>
+    %if logged:
+        <div class="aux">
+            <div id="data">
+                <h1>Hi, {{ logged.name }} </h1>
+                <form method="post" action="/editProfile">
+                    <label for "username"> username </label>
+                    <input name="username" type="text" value={{ logged.name }}></input>
 
-                <label for "email"> Email: {{ loged[2] }} </label>
-                <br/>
-                <input type="submit"value="Actualizar perfil" >
-            </form>
-            
-            <form method="post" action="/logout">
-                <input type="submit"value="Log out" >
-            </form>
-
+                    <br/>
+                    <input type="submit"value="Actualizar perfil" >
+                </form>
+                
+                <form method="post" action="/logout">
+                    <input type="submit"value="Log out" >
+                </form>
+            </div>
         </div>
+
+        <main>
+            <form action="/publicaciones" method="post">
+                <input name="contenido" type="textarea" placeholder="¿Qué está pasando?"></input>
+                <input type="submit"value="Publicar" >
+            </form>
+        </main>
 
 </body>
 </html

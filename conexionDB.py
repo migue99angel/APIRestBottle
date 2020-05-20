@@ -1,29 +1,45 @@
-from bottle import Bottle
-from bottle_login import LoginPlugin
-from bottle.ext import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, Sequence, String
-from sqlalchemy.ext.declarative import declarative_base
+import MySQLdb
+from Usuario import *
+from datetime import datetime
 
-Base = declarative_base()
-engine = create_engine('mysql://miguelAngel:practicasSIBW@127.0.0.1:3306/Prueba')
-app = Bottle()
-plugin = sqlalchemy.Plugin(engine,keyword='db')
-app.install(plugin)
+class conexionDB:
+    def __init__(self):
+        self.db = MySQLdb.connect(host="127.0.0.1",user="miguelAngel",passwd="practicasSIBW",db="Prueba")
+        self.db.autocommit = True
+        self.cur = self.db.cursor()
 
-class MiTabla(Base):
-    __tablename__ = 'MiTabla'
-    id = Column(Integer, primary_key=True)
+    def _getConnection(self):
+        return self.db
+    
+    def _getCursor(self):
+        return self.cur
 
-@app.get('/')
-def show(db):
-    table_data = db.query(MiTabla)
+    def close(self):
+        self.db.close
 
-    results = []
-    for x in table_data:
-        results.append({'id':x.id})
+    def obtenerUsuarios(self):
+        self.cur.execute("SELECT * FROM usuarios")
+        users = self.cur.fetchall()
+        return users
 
-    return {'table_data' : results}
+    def registrarUsuario(self,user,password,email):
+        user = self.db.escape_string(user)
+        password = self.db.escape_string(password)
+        email = self.db.escape_string(email)
+        query = "INSERT INTO usuarios(user, password, email) VALUES (%s, %s, %s)"
+        self.cur.execute(query,((user, password, email)))
+        self.db.commit()
 
-port = 5000
-host = "localhost"
-app.run(debug = True,reloader=True, host=host, port=port)
+    def login(self,name, password):
+        self.cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(name,password))
+        user =  self.cur.fetchone()
+        return user
+
+    def addPublicacion(self,user,contenido):
+        now = datetime.now()
+        email = user.email
+        name = user.name
+        fecha = now.strftime("%Y-%m-%d")
+        self.cur.execute("INSERT INTO publicaciones(email, nombre, fecha, contenido) VALUES (%s, %s, %s, %s)",((email, name, fecha, contenido)))
+        self.db.commit()
+

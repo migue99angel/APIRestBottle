@@ -12,13 +12,9 @@ CREATE TABLE sigue(
 );
 
 CREATE TABLE publicaciones(
-  idPublicacion INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100),
-  fecha DATE,
-  contenido TEXT
-);
-
-CREATE TABLE publica(
-    usuario  VARCHAR(50) REFERENCES usuarios(email),
-    idPublicacion INT NOT NULL REFERENCES publicaciones(idPublicacion)
+    email  VARCHAR(50) REFERENCES usuarios(email),
+    idPublicacion INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    fecha DATE,
+    contenido TEXT
 );
