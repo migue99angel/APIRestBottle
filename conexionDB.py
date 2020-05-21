@@ -1,5 +1,6 @@
 import MySQLdb
 from Usuario import *
+from Publicacion import *
 from datetime import datetime
 
 class conexionDB:
@@ -32,7 +33,9 @@ class conexionDB:
 
     def login(self,name, password):
         self.cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(name,password))
-        user =  self.cur.fetchone()
+        datos =  self.cur.fetchone()
+        user = Usuario(datos[0],datos[1],datos[2])
+        self.cargarPublicaciones(user)
         return user
 
     def addPublicacion(self,user,contenido):
@@ -42,4 +45,11 @@ class conexionDB:
         fecha = now.strftime("%Y-%m-%d")
         self.cur.execute("INSERT INTO publicaciones(email, nombre, fecha, contenido) VALUES (%s, %s, %s, %s)",((email, name, fecha, contenido)))
         self.db.commit()
+        return self.cargarPublicaciones(user)
 
+    def cargarPublicaciones(self,user):
+        email = user.email
+        self.cur.execute("SELECT * FROM publicaciones where email=%s",[email])
+        publicaciones =  self.cur.fetchall()
+        user.cargarPublicaciones(publicaciones)
+        return user

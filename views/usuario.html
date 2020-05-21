@@ -31,6 +31,16 @@
                 <input name="contenido" type="textarea" placeholder="¿Qué está pasando?"></input>
                 <input type="submit"value="Publicar" >
             </form>
+            <div class="Muro">
+            % for p in reversed(logged.publicaciones): 
+                <div class="publicacion">
+                    <p><strong>{{ p.nombre }}</strong></p>
+                    <p>{{ p.contenido}}</p>
+                    <p>{{ p.fecha }}</p>
+                </div>
+            % end
+            </div>
+
         </main>
 
 </body>

@@ -42,6 +42,11 @@ def stylesheets(filename):
 def stylesheets(filename):
     return static_file(filename, root='views/scripts/')
 
+@get('/<user>')
+def getUser(user):
+    
+
+
 
 
 @post('/users')
@@ -58,13 +63,11 @@ def registro():
 
 @post('/login')
 def login():
-    datos_usuario = base.login(request.forms.get('name'), request.forms.get('password'))
-    if datos_usuario != None:
-        user = Usuario(datos_usuario[0],datos_usuario[1],datos_usuario[2])
+    user = base.login(request.forms.get('name'), request.forms.get('password'))
     if user != None:
         request.environ['beaker.session']['user'] = user
         request.environ['beaker.session']['logged'] = True 
-        return template('views/usuario',logged=user)
+        return redirect('/')
     else:         
         return '404 not found'
 
@@ -78,8 +81,9 @@ def logout():
 @post('/publicaciones')
 def publicar():
     contenido = request.forms.get('contenido')
-    base.addPublicacion(request.environ['beaker.session']['user'],contenido)
-    index()
+    #Al aniadir la publicacion vuelvo a cargar las publicaciones para mostrar las publicaciones actualizadas
+    request.environ['beaker.session']['user'] = base.addPublicacion(request.environ['beaker.session']['user'],contenido)
+    return redirect('/')
 
 
 
