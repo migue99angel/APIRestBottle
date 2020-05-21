@@ -6,6 +6,7 @@
         <title>Website in Development</title>
         <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
         <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
     %if logged:
@@ -17,16 +18,27 @@
                     <input name="username" type="text" value={{ logged.name }}></input>
 
                     <br/>
-                    <input type="submit"value="Actualizar perfil" >
+                    <input alt="Si actualizas el nombre de usuario tendrás que iniciar sesion de nuevo"name="newname" type="submit"value="Actualizar perfil" >
                 </form>
                 
                 <form method="post" action="/logout">
                     <input type="submit"value="Log out" >
                 </form>
+
+                <form method="post" action="/verAmigos">
+                    <input type="submit"value="Ver seguidos" >
+                </form>
+
             </div>
+            <div class="barraBusqueda">
+                <form method="post" action="/buscar">
+                    <input name="consulta" type="text" id="search" placeholder="Search..." />
+                </form>
+              </div>
         </div>
 
         <main>
+
             <form action="/publicaciones" method="post">
                 <input name="contenido" type="textarea" placeholder="¿Qué está pasando?"></input>
                 <input type="submit"value="Publicar" >

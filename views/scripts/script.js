@@ -7,3 +7,5 @@ function mostrarRegistro()
     document.getElementById("regForm").style.display = "inline"
 
 }
+
+

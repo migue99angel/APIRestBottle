@@ -53,3 +53,33 @@ class conexionDB:
         publicaciones =  self.cur.fetchall()
         user.cargarPublicaciones(publicaciones)
         return user
+
+    def cargarMuro(self,username):
+        self.cur.execute("SELECT * FROM usuarios where user=%s ",[username])
+        datos =  self.cur.fetchone()
+        if datos != None:
+            user = Usuario(datos[0],datos[1],datos[2])
+            user = self.cargarPublicaciones(user)
+            return user
+        else:
+            return None
+
+    def actualizarPerfil(self,usuario, nuevo_nombre):
+        self.cur.execute("UPDATE usuarios SET user=%s WHERE email=%s",(nuevo_nombre,usuario.email) )
+        self.db.commit()
+
+    def addAmigo(self,usuario, email_seguido):
+        print usuario.email
+        print email_seguido
+        # self.cur.execute("INSERT INTO sigue(usuario_sigue,usuario_seguido) VALUES (%s, %s)",((usuario.email, email_seguido)))
+        # self.db.commit()
+        # self.cargarSeguidos(usuario)
+
+
+    def cargarSeguidos(self,usuario):
+        self.cur.execute("SELECT * FROM sigue,usuarios where usuario_sigue =%s",[usuario.email])
+        seguidos =  self.cur.fetchall()
+        print seguidos
+        # for s in seguidos:
+        #     aux = Usuario
+        #     usuario.addAmigo(aux)

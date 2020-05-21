@@ -42,12 +42,25 @@ def stylesheets(filename):
 def stylesheets(filename):
     return static_file(filename, root='views/scripts/')
 
-@get('/<user>')
-def getUser(user):
-    
+@post('/buscar')
+def getUser():
+    user = request.forms.get('consulta')
+    usuario = base.cargarMuro(user)
+    if usuario != None:
+        return template('views/visitar_muro',user=usuario)
+    else:
+        return '<h1>404 Not found</h1>'
 
 
-
+@post('/editProfile')
+def actualizarPerfil():
+    new_name = request.forms.get('username')
+    if new_name != None:
+        base.actualizarPerfil(request.environ['beaker.session']['user'],new_name)
+        request.environ['beaker.session'].delete()
+        return redirect('/')
+    else:
+        return '<h1>Algo ha pasado...</h1>'
 
 @post('/users')
 def registro():
@@ -75,7 +88,7 @@ def login():
 @post('/logout')
 def logout():
     request.environ['beaker.session'].delete()
-    return template('views/index')
+    return redirect('/')
 
 
 @post('/publicaciones')
@@ -85,7 +98,10 @@ def publicar():
     request.environ['beaker.session']['user'] = base.addPublicacion(request.environ['beaker.session']['user'],contenido)
     return redirect('/')
 
-
+@post('/addFriend')
+def seguir():
+    request.environ['beaker.session']['user'] = base.addAmigo(request.environ['beaker.session']['user'],request.forms.get('email'))
+    return redirect('/')
 
 
 port = 5000

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Website in Development</title>
+        <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+    %if user:
+        <div class="aux">
+            <div id="data">
+                <h1>Este es el muro de , {{ user.name }} </h1>
+                <form method="post" action="/addFriend">
+                    <input type="submit" value="Seguir" >
+                    <input name="email"type="hidden" value={{ user.email }}></input>
+                </form>
+                <a href="/">Volver a mi muro</a>
+            </div>
+        </div>
+
+        <main>
+            <div class="Muro">
+            % for p in reversed(user.publicaciones): 
+                <div class="publicacion">
+                    <p><strong>{{ p.nombre }}</strong></p>
+                    <p>{{ p.contenido}}</p>
+                    <p>{{ p.fecha }}</p>
+                </div>
+            % end
+            </div>
+
+        </main>
+
+</body>
+</html
