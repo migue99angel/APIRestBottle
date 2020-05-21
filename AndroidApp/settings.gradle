@@ -1,2 +1,2 @@
 rootProject.name='P4DS'
-include ':app'
+include ':app', ':mssql-jdbc-8.2.2.jre8', ':mysql-connector-java-5.1.49'
