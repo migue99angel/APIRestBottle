@@ -7,7 +7,7 @@ from json import dumps
 
 class conexionDB:
     def __init__(self):
-        self.db = MySQLdb.connect(host="127.0.0.1",user="coronavirus",passwd="covid19",db="p3ds")
+        self.db = MySQLdb.connect(host="127.0.0.1",user="miguelAngel",passwd="practicasSIBW",db="Prueba")
         self.db.autocommit = True
         self.cur = self.db.cursor()
 
