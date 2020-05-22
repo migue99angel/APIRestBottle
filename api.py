@@ -26,11 +26,11 @@ def setup_request():
 def index():
     if 'logged' in request.environ['beaker.session']:
         if request.environ['beaker.session']['logged'] == False :
-            return template('views/index')
+            return template('views/index',error=0)
         else:
             return template('views/usuario',logged=request.environ['beaker.session']['user'])
     else:
-        return template('views/index')
+        return template('views/index',error=0)
 
 #Enlazar el css
 @get('/<filename:re:.*\.css>')
@@ -82,7 +82,7 @@ def login():
         request.environ['beaker.session']['logged'] = True 
         return redirect('/')
     else:         
-        return '404 not found'
+        return template('views/index',error=1)
 
 
 @post('/logout')
@@ -101,7 +101,17 @@ def publicar():
 @post('/addFriend')
 def seguir():
     request.environ['beaker.session']['user'] = base.addAmigo(request.environ['beaker.session']['user'],request.forms.get('email'))
-    return redirect('/')
+    usuario = base.cargarMuro(request.forms.get('name'))
+    if usuario != None:
+        return template('views/visitar_muro',user=usuario)
+
+@post('/verAmigos')
+def verAmigos():
+    return template('views/lista_usuarios',lista=request.environ['beaker.session']['user'].amigos)
+
+@post('/verSeguidores')
+def verAmigos():
+    return template('views/lista_usuarios',lista=request.environ['beaker.session']['user'].seguidores)
 
 
 port = 5000

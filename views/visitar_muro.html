@@ -14,7 +14,8 @@
                 <h1>Este es el muro de , {{ user.name }} </h1>
                 <form method="post" action="/addFriend">
                     <input type="submit" value="Seguir" >
-                    <input name="email"type="hidden" value={{ user.email }}></input>
+                    <input name="email" type="hidden" value={{ user.email }}></input>
+                    <input name="name" type="hidden" value={{ user.name }}></input>
                 </form>
                 <a href="/">Volver a mi muro</a>
             </div>

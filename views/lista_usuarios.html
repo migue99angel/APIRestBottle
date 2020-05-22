@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Website in Development</title>
+        <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+    %if lista:
+        <main>
+            <div class="Muro">
+                % for a in reversed(lista): 
+                    <div class="publicacion">
+                        <p><strong>{{ a.name }}</strong></p>
+                        <form method="post" action="/buscar">
+                            <input type="submit" value="Ver su muro" >
+                            <input name="consulta" type="hidden" value={{a.name}} >
+                        </form>
+                    </div>
+                % end
+            </div>
+        </main> 
+    </body>
+</html

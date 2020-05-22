@@ -4,6 +4,8 @@ class Usuario:
         self.name = name
         self.password = password
         self.email = email
+        self.amigos = []
+        self.seguidores = []
 
         
 
@@ -15,3 +17,11 @@ class Usuario:
     def addAmigo(self,amigo):
         self.amigos.append(amigo)
 
+    def addSeguidor(self,seguidor):
+        self.seguidores.append(seguidor)
+
+    def limpiarAmigos(self):
+        self.amigos = []
+
+    def limpiarSeguidores(self):
+        self.seguidores = []

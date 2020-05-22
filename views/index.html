@@ -9,7 +9,7 @@
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
-
+    
     <div  id="login">
         <h1>Login here</h1>
         <form method="post" action="/login">
@@ -21,8 +21,10 @@
             <input type="submit" value="Log In">
             <input type="button" value="Sing Up" onclick="mostrarRegistro()">
             <a href="#"> I forgot my password </a>
-
         </form>
+        %if error:
+            %if error == 1:
+                <p>El usuario o la contraseña no son correctos</p>
     </div>
 
 

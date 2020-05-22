@@ -34,9 +34,13 @@ class conexionDB:
     def login(self,name, password):
         self.cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(name,password))
         datos =  self.cur.fetchone()
-        user = Usuario(datos[0],datos[1],datos[2])
-        self.cargarPublicaciones(user)
-        return user
+        if datos != None:
+            user = Usuario(datos[0],datos[1],datos[2])
+            user = self.cargarPublicaciones(user)
+            user = self.cargarSeguidos(user)
+            return self.cargarSeguidores(user)
+        else:
+            return None
 
     def addPublicacion(self,user,contenido):
         now = datetime.now()
@@ -69,17 +73,33 @@ class conexionDB:
         self.db.commit()
 
     def addAmigo(self,usuario, email_seguido):
-        print usuario.email
-        print email_seguido
-        # self.cur.execute("INSERT INTO sigue(usuario_sigue,usuario_seguido) VALUES (%s, %s)",((usuario.email, email_seguido)))
-        # self.db.commit()
-        # self.cargarSeguidos(usuario)
+        self.cur.execute("INSERT INTO sigue(usuario_sigue,usuario_seguido) VALUES (%s, %s)",((usuario.email, email_seguido)))
+        self.db.commit()
+        return self.cargarSeguidos(usuario)
 
 
     def cargarSeguidos(self,usuario):
-        self.cur.execute("SELECT * FROM sigue,usuarios where usuario_sigue =%s",[usuario.email])
+        usuario.limpiarAmigos()
+        self.cur.execute("SELECT usuario_seguido FROM sigue where usuario_sigue =%s",[usuario.email])
         seguidos =  self.cur.fetchall()
-        print seguidos
-        # for s in seguidos:
-        #     aux = Usuario
-        #     usuario.addAmigo(aux)
+        for s in seguidos:
+            self.cur.execute("SELECT * FROM usuarios where email =%s",[s])
+            datos =  self.cur.fetchone()
+            aux = Usuario(datos[0],datos[1],datos[2])
+            usuario.addAmigo(aux)
+
+        return usuario
+
+
+    
+    def cargarSeguidores(self,usuario):
+        usuario.limpiarSeguidores()
+        self.cur.execute("SELECT usuario_sigue FROM sigue where usuario_seguido =%s",[usuario.email])
+        seguidores =  self.cur.fetchall()
+        for s in seguidores:
+            self.cur.execute("SELECT * FROM usuarios where email =%s",[s])
+            datos =  self.cur.fetchone()
+            aux = Usuario(datos[0],datos[1],datos[2])
+            usuario.addSeguidor(aux)
+
+        return usuario
