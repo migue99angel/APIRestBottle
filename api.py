@@ -84,6 +84,11 @@ def login():
     else:         
         return template('views/index',error=1)
 
+# Login desde Android. Devolvemos JSON con los datos del usuario
+@post('/loginAPI')
+def loginAPI():
+    userJSON = base.loginAPI(request.forms.get('name'), request.forms.get('password'))
+    return userJSON
 
 @post('/logout')
 def logout():

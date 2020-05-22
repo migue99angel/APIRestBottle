@@ -6,11 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,11 +35,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        Button btn = (Button) findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                iniciarSesion(v);
+                setContentView(R.layout.perfil);
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void iniciarSesion(View view) {
-        String url = "http://10.0.2.2:5000/login"; // Hay que usar esta IP para referirnos a nuestra propia máquina y no al propio emulador
+        String url = "http://10.0.2.2:5000/loginAPI"; // Hay que usar esta IP para referirnos a nuestra propia máquina y no al propio emulador
 
         final EditText name = (EditText) findViewById(R.id.editText2);
         EditText password = (EditText) findViewById(R.id.editText3);
@@ -64,29 +80,28 @@ public class MainActivity extends AppCompatActivity {
                     throw new IOException("Unexpected code " + response);
                 }
 
-                // Si la consulta tiene éxito, cargamos el perfil del usuario
                 try {
-                    cargarPerfil(name.getText().toString());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                    JSONObject json = new JSONObject(response.body().string());
+                    final JSONObject data = json.getJSONObject("data");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Actualizamos el nombre del perfil
+                            String user = null;
+                            try {
+                                user = data.getString("user");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            TextView nombreUser = (TextView) findViewById(R.id.textView5) ;
+                            nombreUser.setText(user);
+                        }
+                    });
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-    private void cargarPerfil(String name) throws SQLException, ClassNotFoundException {
-        // Consulta para obtener los datos del usuario para cargar el perfil
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://10.0.2.2:8080/p3ds", "usuario", "pass"); // !! CAMBIAR DATOS PARA LA CONEXIÓN !!
-        Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM usuarios WHERE user=" + name;
-        ResultSet rs = stmt.executeQuery(query);
-
-        // Actualizamos la vista con lo obteido a través de la consulta
-
-        // Cargamos la vista
-        setContentView(R.layout.perfil);
     }
 }
