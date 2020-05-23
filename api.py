@@ -119,6 +119,11 @@ def verAmigos():
     return template('views/lista_usuarios',lista=request.environ['beaker.session']['user'].seguidores)
 
 
+@post('/eliminarPublicacion')
+def eliminarPublicacion():
+    request.environ['beaker.session']['user'] = base.eliminarPublicacion(request.environ['beaker.session']['user'],request.forms.get('id'))
+    return redirect('/')
+
 port = 5000
 host = "localhost"
 bottle.run(app=app,debug=True, reloader=True, host=host, port=port)

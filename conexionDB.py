@@ -122,3 +122,10 @@ class conexionDB:
             usuario.addSeguidor(aux)
 
         return usuario
+
+
+    def eliminarPublicacion(self,usuario,id):
+        self.cur.execute("DELETE FROM publicaciones WHERE idPublicacion =%s",[id])
+        self.db.commit()
+        usuario = self.cargarPublicaciones(usuario)
+        return usuario 
