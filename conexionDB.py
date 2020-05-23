@@ -74,6 +74,10 @@ class conexionDB:
         self.cur.execute("UPDATE usuarios SET user=%s WHERE email=%s",(nuevo_nombre,usuario.email) )
         self.db.commit()
 
+    def actualizarPerfilAPI(self, email, nuevo_nombre):
+        self.cur.execute("UPDATE usuarios SET user=%s WHERE email=%s", (nuevo_nombre, email))
+        self.db.commit()
+
     def addAmigo(self,usuario, email_seguido):
         self.cur.execute("INSERT INTO sigue(usuario_sigue,usuario_seguido) VALUES (%s, %s)",((usuario.email, email_seguido)))
         self.db.commit()

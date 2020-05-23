@@ -62,6 +62,31 @@ def actualizarPerfil():
     else:
         return '<h1>Algo ha pasado...</h1>'
 
+# Cambiar nombre desde Android.
+@post('/editProfileAPI')
+def actualizarPerfilAPI():
+    new_name = request.forms.get('username')
+    email = request.forms.get('email')
+
+    if new_name != None:
+        base.actualizarPerfilAPI(email, new_name)
+        request.environ['beaker.session'].delete()
+        rv = {
+            "respuesta": {
+                "cambio": 1
+            }
+        }
+        response.content_type = 'application/json'
+        return dumps(rv)
+    else:
+        rv = {
+            "respuesta": {
+                "cambio": 0
+            }
+        }
+        response.content_type = 'application/json'
+        return dumps(rv)
+
 @post('/users')
 def registro():
     if request.forms.get('password') == request.forms.get('confirm_password'):
@@ -90,20 +115,25 @@ def loginAPI():
     user = base.login(request.forms.get('name'), request.forms.get('password'))
     if user != None:
         request.environ['beaker.session']['user'] = user
-        request.environ['beaker.session']['logged'] = True 
+        request.environ['beaker.session']['logged'] = True
         rv = {
             "data": {
                 "user": user.name,
                 "email": user.email,
                 "cantidadAmigos": len(user.amigos),
-                "cantidadSeguidores": len(user.seguidores)
+                "cantidadSeguidores": len(user.seguidores),
+                "error": 0
             }
         }
         response.content_type = 'application/json'
         return dumps(rv)
         
     else:         
-        rv = [{'error': true}]
+        rv = {
+            "data": {
+                "error": 1
+            }
+        }
         response.content_type = 'application/json'
         return dumps(rv)
 
