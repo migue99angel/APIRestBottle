@@ -116,3 +116,8 @@ class conexionDB:
         self.db.commit()
         usuario = self.cargarPublicaciones(usuario)
         return usuario 
+
+    def deleteAmigo(self,usuario, email_seguido):
+        self.cur.execute("DELETE FROM sigue WHERE usuario_sigue=%s AND usuario_seguido=%s",[usuario.email,email_seguido])
+        self.db.commit()
+        return self.cargarSeguidos(usuario)

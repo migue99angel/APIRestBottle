@@ -102,6 +102,9 @@ body{
     background-color: #03658c; 
 }
 
+#dejarDeSeguir input[type="submit"]:hover{
+    background-color: red; 
+}
 
 #login input[type="button"]:hover, #regForm input[type="button"]:hover,#data input[type="button"]:hover{
     background-color: #03658c; 

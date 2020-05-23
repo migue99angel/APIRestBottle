@@ -26,4 +26,9 @@ class Usuario:
     def limpiarSeguidores(self):
         self.seguidores = []
 
+    def sigueA(self,usuario):
+        for a in self.amigos:
+            if usuario.name == a.name:
+                return True
+
                 

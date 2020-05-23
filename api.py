@@ -45,9 +45,10 @@ def stylesheets(filename):
 @post('/buscar')
 def getUser():
     user = request.forms.get('consulta')
-    usuario = base.cargarMuro(user)
+    usuario = base.cargarMuro(user)   
     if usuario != None:
-        return template('views/visitar_muro',user=usuario)
+        seguido = request.environ['beaker.session']['user'].sigueA(usuario)
+        return template('views/visitar_muro',user=usuario,seguido=seguido)
     else:
         return '<h1>404 Not found</h1>'
 
@@ -155,7 +156,7 @@ def seguir():
     request.environ['beaker.session']['user'] = base.addAmigo(request.environ['beaker.session']['user'],request.forms.get('email'))
     usuario = base.cargarMuro(request.forms.get('name'))
     if usuario != None:
-        return template('views/visitar_muro',user=usuario)
+        return template('views/visitar_muro',user=usuario,seguido=True)
 
 @post('/verAmigos')
 def verAmigos():
@@ -170,6 +171,13 @@ def verAmigos():
 def eliminarPublicacion():
     request.environ['beaker.session']['user'] = base.eliminarPublicacion(request.environ['beaker.session']['user'],request.forms.get('id'))
     return redirect('/')
+
+@post('/deleteFriend')
+def dejarDeSeguir():
+    request.environ['beaker.session']['user'] = base.deleteAmigo(request.environ['beaker.session']['user'],request.forms.get('email'))
+    usuario = base.cargarMuro(request.forms.get('name'))
+    if usuario != None:
+        return template('views/visitar_muro',user=usuario,seguido=False)
 
 port = 5000
 host = "localhost"

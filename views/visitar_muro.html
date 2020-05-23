@@ -13,11 +13,17 @@
             <div id="data">
                 <h1>Este es el muro de , {{ user.name }} </h1>
                 <br/>
+                %if seguido == True:
+                <form method="post" id="dejarDeSeguir" action="/deleteFriend">
+                    <input type="submit" value="Dejar de seguir" >
+                %else:
                 <form method="post" action="/addFriend">
                     <input type="submit" value="Seguir" >
+                %end
                     <input name="email" type="hidden" value={{ user.email }}></input>
                     <input name="name" type="hidden" value={{ user.name }}></input>
                 </form>
+                
                 <a href="/">Volver a mi muro</a>
             </div>
         </div>
