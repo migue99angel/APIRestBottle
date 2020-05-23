@@ -43,7 +43,7 @@ def stylesheets(filename):
     return static_file(filename, root='views/scripts/')
 
 @post('/buscar')
-def getUser():
+def getUserPost():
     user = request.forms.get('consulta')
     usuario = base.cargarMuro(user)   
     if usuario != None:
@@ -51,6 +51,7 @@ def getUser():
         return template('views/visitar_muro',user=usuario,seguido=seguido)
     else:
         return '<h1>404 Not found</h1>'
+
 
 
 @post('/editProfile')
@@ -186,6 +187,29 @@ def dejarDeSeguir():
     usuario = base.cargarMuro(request.forms.get('name'))
     if usuario != None:
         return template('views/visitar_muro',user=usuario,seguido=False)
+
+@post('/comentarPublicacion')
+def comentarPublicacion():
+    if request.forms.get('comentario') != "" and request.forms.get('id') != None:
+        contenido = request.forms.get('comentario')
+        id  = request.forms.get('id')
+        request.environ['beaker.session']['user'] = base.nuevoComentario(request.environ['beaker.session']['user'],id,contenido)
+        
+    if request.forms.get('visita') == str(1): 
+        return redirect('/')
+    else:
+        usuario = base.cargarMuro(request.forms.get('nombreMuro'))   
+        if usuario != None:
+            seguido = request.environ['beaker.session']['user'].sigueA(usuario)
+            return template('views/visitar_muro',user=usuario,seguido=seguido)
+        else:
+            return '<h1>404 Not found</h1>'
+
+
+
+
+
+
 
 port = 5000
 host = "localhost"

@@ -18,3 +18,12 @@ CREATE TABLE publicaciones(
     fecha DATE,
     contenido TEXT
 );
+
+CREATE TABLE comentarios(
+    idComentario INT AUTO_INCREMENT PRIMARY KEY,
+    email  VARCHAR(50) REFERENCES usuarios(email),
+    nombre VARCHAR(100),
+    fecha DATE,
+    contenido TEXT,
+    idPublicacion INT REFERENCES publicaciones(idPublicacion)
+);

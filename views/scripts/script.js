@@ -8,3 +8,10 @@ function mostrarRegistro()
 
 }
 
+function mostrarComentario(id)
+{
+    if (document.getElementsByClassName("comentarPublicacion")[id].style.display == "none")
+        document.getElementsByClassName("comentarPublicacion")[id].style.display = "block"
+    else
+        document.getElementsByClassName("comentarPublicacion")[id].style.display = "none"
+}

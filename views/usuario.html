@@ -52,6 +52,7 @@
             </div>
 
             <div class="Muro">
+            %a = 0
             % for p in reversed(logged.publicaciones): 
                 <div class="comment-main-level">
 					<!-- Contenedor del Comentario -->
@@ -64,13 +65,38 @@
                             {{ p.contenido}}
                             <form method="post" class="eliminar" action="/eliminarPublicacion">
                                 <input type="submit" value="Eliminar" >
+                                <input type="button" value="Comentar" onclick="mostrarComentario({{a}})">
                                 <input type="hidden" name="id" value={{p.id}}>
                             </form>
                         </div>
 
-					</div>
+                        <form method="post" class="comentarPublicacion" action="/comentarPublicacion" style="display:none;">
+                            <input type="hidden" name="id" value={{p.id}}>
+                            <input type="hidden" name="visita" value=1>
+                            <input name="comentario" type="text"  placeholder="Deja tu comentario" />
+                        </form>
+
+                    </div>
+                    <ul class="comments-list reply-list">
+                        <li>
+                            % for c in reversed(p.comentarios):
+                            <div class="comment-box">
+                                <div class="comment-head">
+                                    <h6 class="comment-name by-author">{{ c.nombre }}</h6>
+                                    <span>{{ c.fecha }}</span>
+                                </div>
+                                <div class="comment-content">
+                                    {{ c.contenido }}
+                                </div>
+                                <br/>
+                            </div>
+                            
+                            % end
+                        </li>
+                    </ul>
                 </div>
                 <br/>
+                %a=a+1
             % end
             </div>
 

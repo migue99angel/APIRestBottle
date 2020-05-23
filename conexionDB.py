@@ -57,8 +57,14 @@ class conexionDB:
         email = user.email
         self.cur.execute("SELECT * FROM publicaciones where email=%s",[email])
         publicaciones =  self.cur.fetchall()
-        user.cargarPublicaciones(publicaciones)
+        user.limpiarPublicaciones()
+        for p in publicaciones:
+            self.cur.execute("SELECT * FROM comentarios where idPublicacion=%s",[p[1]])
+            comentarios = self.cur.fetchall()
+            user.cargarPublicacion(p,comentarios)
+
         return user
+
 
     def obtenerPublicacionesJSON(self, email):
         self.cur.execute("SELECT * FROM publicaciones WHERE email=%s", [email])
@@ -142,3 +148,12 @@ class conexionDB:
         self.cur.execute("DELETE FROM sigue WHERE usuario_sigue=%s AND usuario_seguido=%s",[usuario.email,email_seguido])
         self.db.commit()
         return self.cargarSeguidos(usuario)
+
+    def nuevoComentario(self,user,id,contenido):
+        now = datetime.now()
+        email = user.email
+        name = user.name
+        fecha = now.strftime("%Y-%m-%d")
+        self.cur.execute("INSERT INTO comentarios(email, nombre, fecha, contenido, idPublicacion) VALUES (%s, %s, %s, %s, %s)",((email, name, fecha, contenido,id)))
+        self.db.commit()
+        return self.cargarPublicaciones(user)

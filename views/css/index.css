@@ -96,6 +96,7 @@ body{
     color: #fff;
     font-size: 18px;
     border-radius: 20px;
+    margin-left: 0%;
 }
 
 #login input[type="submit"]:hover, #regForm input[type="submit"]:hover,#data input[type="submit"]:hover{
@@ -240,40 +241,6 @@ body {
 /**
 * Lineas / Detalles
 -----------------------*/
-.comments-list:before {
-   content: '';
-   width: 2px;
-   height: 100%;
-   background: #c7cacb;
-   position: absolute;
-   left: 32px;
-   top: 0;
-}
-
-.comments-list:after {
-   content: '';
-   position: absolute;
-   background: #c7cacb;
-   bottom: 0;
-   left: 27px;
-   width: 7px;
-   height: 7px;
-   border: 3px solid #dee1e3;
-   -webkit-border-radius: 50%;
-   -moz-border-radius: 50%;
-   border-radius: 50%;
-}
-
-.reply-list:before, .reply-list:after {display: none;}
-.reply-list li:before {
-   content: '';
-   width: 60px;
-   height: 2px;
-   background: #c7cacb;
-   position: absolute;
-   top: 25px;
-   left: -55px;
-}
 
 
 .comments-list li {
@@ -328,7 +295,7 @@ body {
 }
 
 .reply-list .comment-box {
-   width: 610px;
+   width: 100%;
 }
 .comment-box .comment-head {
    background: #FCFCFC;
@@ -386,8 +353,8 @@ body {
    border-radius: 0 0 4px 4px;
 }
 
-.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a,  input[type=submit] {color: #03658c;}
-.comment-box .comment-name.by-author:after, input[type=submit] {
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a,  input[type=submit], input[type=button] {color: #03658c;}
+.comment-box .comment-name.by-author:after, input[type=submit], input[type=button] {
    content: 'AUTOR';
    background: #03658c;
    color: #FFF;
@@ -467,4 +434,22 @@ body {
   /* When moving the mouse over the close button */
   .closebtn:hover {
     color: black;
+  }
+
+  .comentarPublicacion, .comentarPublicacion input[type=text]{
+      width: 100%;
+      height: 100%;
+  }
+
+  .comentarPublicacion{
+      margin-top: 2%;
+      margin-bottom: 2%;
+      display: none;
+  }
+
+  .comentarPublicacion input[type=text]{
+      border: none;
+      background-color: transparent;
+      border-bottom: #03658c solid;
+      padding: 1%;
   }

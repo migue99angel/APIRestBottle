@@ -6,6 +6,7 @@
         <title>Website in Development</title>
         <!--Enlazo el código html con el fichero css que contendrá el estilo de la página-->
         <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
     %if user:
@@ -30,6 +31,7 @@
 
         <main>
             <div class="Muro">
+                %a = 0
                 % for p in reversed(user.publicaciones): 
                     <div class="comment-main-level">
                         <!-- Contenedor del Comentario -->
@@ -40,11 +42,38 @@
                             </div>
                             <div class="comment-content">
                                 {{ p.contenido}}
+                                <input type="button" value="Comentar" onclick="mostrarComentario({{a}})">
                             </div>
+
+                           
+                            <form method="post" class="comentarPublicacion" action="/comentarPublicacion" style="display:none;">
+                                <input type="hidden" name="id" value={{p.id}}>
+                                <input type="hidden" name="visita" value=0>
+                                <input type="hidden" name="nombreMuro" value={{ p.nombre }}>
+                                <input name="comentario" type="text"  placeholder="Deja tu comentario" />
+                            </form>
     
                         </div>
+                        <ul class="comments-list reply-list">
+                            <li>
+                                % for c in reversed(p.comentarios):
+                                <div class="comment-box">
+                                    <div class="comment-head">
+                                        <h6 class="comment-name by-author">{{ c.nombre }}</h6>
+                                        <span>{{ c.fecha }}</span>
+                                    </div>
+                                    <div class="comment-content">
+                                        {{ c.contenido }}
+                                    </div>
+                                    <br/>
+                                </div>
+                                
+                                % end
+                            </li>
+                        </ul>
                     </div>
                     <br/>
+                    %a = a + 1
                 % end
 
         </main>
