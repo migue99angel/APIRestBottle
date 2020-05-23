@@ -43,23 +43,6 @@ class conexionDB:
             return self.cargarSeguidores(user)
         else:
             return None
-    
-    def loginAPI(self, name, password):
-        self.cur.execute("SELECT * FROM usuarios where user=%s AND password=%s",(name,password))
-        datos =  self.cur.fetchone()
-        if datos != None:
-            rv = {
-                "data": {
-                    "user": datos[0],
-                    "email": datos[2]
-                }
-            }
-            response.content_type = 'application/json'
-            return dumps(rv)
-        else:
-            rv = [{'error': true}]
-            response.content_type = 'application/json'
-            return dumps(rv)
 
     def addPublicacion(self,user,contenido):
         now = datetime.now()
