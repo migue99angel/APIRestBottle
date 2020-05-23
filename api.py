@@ -87,8 +87,25 @@ def login():
 # Login desde Android. Devolvemos JSON con los datos del usuario
 @post('/loginAPI')
 def loginAPI():
-    userJSON = base.loginAPI(request.forms.get('name'), request.forms.get('password'))
-    return userJSON
+    user = base.login(request.forms.get('name'), request.forms.get('password'))
+    if user != None:
+        request.environ['beaker.session']['user'] = user
+        request.environ['beaker.session']['logged'] = True 
+        rv = {
+            "data": {
+                "user": user.name,
+                "email": user.email,
+                "cantidadAmigos": len(user.amigos),
+                "cantidadSeguidores": len(user.seguidores)
+            }
+        }
+        response.content_type = 'application/json'
+        return dumps(rv)
+        
+    else:         
+        rv = [{'error': true}]
+        response.content_type = 'application/json'
+        return dumps(rv)
 
 @post('/logout')
 def logout():
