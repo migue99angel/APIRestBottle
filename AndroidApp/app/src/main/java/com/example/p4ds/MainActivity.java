@@ -220,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
     public void mostrarPublicaciones(View v) {
         String url = "http://10.0.2.2:5000/publicacionesAPI"; // Hay que usar esta IP para referirnos a nuestra propia máquina y no al propio emulador
 
-        final EditText name = (EditText) findViewById(R.id.editText);
-
         final OkHttpClient client = new OkHttpClient();
 
         RequestBody cuerpo = new FormBody.Builder()
@@ -266,9 +264,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    private void jsonParse() {
-
     }
 }
