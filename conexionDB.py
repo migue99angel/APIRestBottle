@@ -60,6 +60,27 @@ class conexionDB:
         user.cargarPublicaciones(publicaciones)
         return user
 
+    def obtenerPublicacionesJSON(self, email):
+        self.cur.execute("SELECT * FROM publicaciones WHERE email=%s", [email])
+        publicaciones = self.cur.fetchall()
+        contador = 0
+        rv = {
+        }
+        
+        for row in publicaciones:
+            obj = {
+                "email": row[0],
+                "id": row[1],
+                "autor": row[2],
+                "fecha": row[3].strftime("%Y/%m/%d"),
+                "contenido": row[4]
+            }
+            rv[contador] = obj
+            contador += 1
+
+        print(rv)
+        return rv
+
     def cargarMuro(self,username):
         self.cur.execute("SELECT * FROM usuarios where user=%s ",[username])
         datos =  self.cur.fetchone()

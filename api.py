@@ -151,6 +151,14 @@ def publicar():
     request.environ['beaker.session']['user'] = base.addPublicacion(request.environ['beaker.session']['user'],contenido)
     return redirect('/')
 
+# Obtener las publicaciones en formato JSON para Android
+@post('/publicacionesAPI')
+def obtenerPublicaciones():
+    email = request.forms.get('email')
+    publicaciones = base.obtenerPublicacionesJSON(email)
+    response.content_type = 'application/json'
+    return dumps(publicaciones)
+
 @post('/addFriend')
 def seguir():
     request.environ['beaker.session']['user'] = base.addAmigo(request.environ['beaker.session']['user'],request.forms.get('email'))

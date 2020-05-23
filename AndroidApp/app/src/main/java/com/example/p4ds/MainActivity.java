@@ -5,18 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.io.IOException;
 import java.sql.*;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean identificado = false;
     private String email = null;
+
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,5 +215,60 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void mostrarPublicaciones(View v) {
+        String url = "http://10.0.2.2:5000/publicacionesAPI"; // Hay que usar esta IP para referirnos a nuestra propia máquina y no al propio emulador
+
+        final EditText name = (EditText) findViewById(R.id.editText);
+
+        final OkHttpClient client = new OkHttpClient();
+
+        RequestBody cuerpo = new FormBody.Builder()
+                .add("email", email)
+                .build();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(cuerpo)
+                .build();
+
+        if(identificado) {
+            // Con .enqueue hacemos peticiones asíncronas
+            // https://stackoverflow.com/questions/39440806/android-okhttpclient-requesting-error?rq=1
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    if(!response.isSuccessful()) {
+                        throw new IOException("Unexpected code " + response);
+                    }
+
+                    try {
+                        final JSONObject json = new JSONObject(response.body().string());
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setContentView(R.layout.publicaciones);
+                                TextView publicacionesJSON = (TextView) findViewById(R.id.publicacionesJSON);
+                                publicacionesJSON.setText(json.toString());
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    private void jsonParse() {
+
     }
 }
