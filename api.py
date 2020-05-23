@@ -45,12 +45,8 @@ def stylesheets(filename):
 @post('/buscar')
 def getUserPost():
     user = request.forms.get('consulta')
-    usuario = base.cargarMuro(user)   
-    if usuario != None:
-        seguido = request.environ['beaker.session']['user'].sigueA(usuario)
-        return template('views/visitar_muro',user=usuario,seguido=seguido)
-    else:
-        return '<h1>404 Not found</h1>'
+    usuario = base.cargarMuro(user) 
+    return obtenerUser(usuario)
 
 
 
@@ -194,20 +190,21 @@ def comentarPublicacion():
         contenido = request.forms.get('comentario')
         id  = request.forms.get('id')
         request.environ['beaker.session']['user'] = base.nuevoComentario(request.environ['beaker.session']['user'],id,contenido)
-        
+
     if request.forms.get('visita') == str(1): 
         return redirect('/')
     else:
         usuario = base.cargarMuro(request.forms.get('nombreMuro'))   
-        if usuario != None:
-            seguido = request.environ['beaker.session']['user'].sigueA(usuario)
-            return template('views/visitar_muro',user=usuario,seguido=seguido)
-        else:
-            return '<h1>404 Not found</h1>'
+        return obtenerUser(usuario)
 
 
 
-
+def obtenerUser(usuario):
+    if usuario != None:
+        seguido = request.environ['beaker.session']['user'].sigueA(usuario)
+        return template('views/visitar_muro',user=usuario,seguido=seguido)
+    else:
+        return '<h1>404 Not found</h1>'
 
 
 
