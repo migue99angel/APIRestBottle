@@ -1,8 +1,8 @@
 /***********************************************************************************************************************************************/
 body{
     /*Esta será la fuente que utilizaré en todo la página*/
-    background-color: #14150E;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgb(0, 0, 0);
+    font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
 }
 /*Estilo correspondiente al login*/
 /*Parte necesaria para que se redimensione el login al disminuir el tamaño de la pestaña*/
@@ -21,9 +21,9 @@ body{
 
 #login{
     height: 420px;
-    background: #000;
+    background: white;
     /*Color de la letra*/
-    color: #fff;
+    color: #03658c;
     box-sizing: border-box;
     margin-left: 40%;
     margin-top: 10%;
@@ -32,20 +32,21 @@ body{
 
 #data{
     height: 420px;
-    background: #000;
+    background: #fff;
     /*Color de la letra*/
-    color: #fff;
+    color: #03658c;
     box-sizing: border-box;
     margin-left: 2.5%;
-    margin-top: 10%;
+    margin-right: 1%;
+    margin-top: 5%;
     padding: 40px 30px;
 }
 
 #regForm{
     height: 500px !important;
-    background: #000;
+    background: #fff;
     /*Color de la letra*/
-    color: #fff;
+    color: #dee1e3;
     box-sizing: border-box;
     margin-left: 40%;
     margin-top: 10%;
@@ -53,11 +54,11 @@ body{
 }
 
 #login label, #regForm label, #data label{
-    margin: 0;
-    padding: 0;
     font-weight: bold;
     /*display block para que se vean los campos uno encima del otro*/
     display: block;
+    color: #03658c;
+    text-align: center;
 }
 
 #login input, #regForm input, #data input{
@@ -71,38 +72,44 @@ body{
     background: transparent;
     outline: none;
     height: 40px;
-    color: #fff;
+    color: #03658c;
     font-size: 16px;
+    border-bottom: #03658c solid
 }
 
 #login input[type="submit"], #regForm input[type="submit"],#data input[type="submit"]{
     border: none;
     outline: none;
     height: 40px;
-    background: #FAD201;
+    background: #dee1e3;
     color: #fff;
     font-size: 18px;
     border-radius: 20px;
+    margin-left: 0 !important;
 }
 
 #login input[type="button"], #regForm input[type="button"],#data input[type="button"]{
     border: none;
     outline: none;
     height: 40px;
-    background: #FAD201;
+    background: #dee1e3;
     color: #fff;
     font-size: 18px;
     border-radius: 20px;
 }
 
 #login input[type="submit"]:hover, #regForm input[type="submit"]:hover,#data input[type="submit"]:hover{
-    background-color: #FFA420; 
+    background-color: #03658c; 
+}
+
+
+#login input[type="button"]:hover, #regForm input[type="button"]:hover,#data input[type="button"]:hover{
+    background-color: #03658c; 
 }
 
 #login h1, #regForm h1, #data h1{
-    margin 0;
-    padding 0 0 20px;
     text-align: center;
+    color: #03658c;
     font-size: 22px;
 }
 
@@ -115,7 +122,7 @@ body{
 
 /*Hover hace que al pasar el ratón por encima cambie de color*/
 #login a:hover, #regForm a:hover,  #data a:hover{
-    color: #FAD201;
+    color: #03658c;
 }
 
 #regForm{
@@ -134,40 +141,9 @@ main{
     position: absolute;
 }
 
-main form{
-    height: 10%;
-    width: 100%;
-}
-
-main form input{
-    width: 100%;
-    height: 100%;
-    color: white;
-    background-color: #000;
-    padding: 2%;
-}
-
-main form input[type="submit"]{
-    border: none;
-    outline: none;
-    height: 30px;
-    background: #FAD201;
-    color: #fff;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 20px;
-    margin-top: 1%;
-    width: 100%;
-}
-
-
-main form input[type="submit"]:hover{
-    background-color: #FFA420; 
-}
-
 .Muro{
     color: white;
-    margin-top: 15%;
+    margin-top: 5%;
     margin-left: 2%;
 }
 
@@ -180,25 +156,30 @@ main form input[type="submit"]:hover{
     margin: 1%;
 }
 
-.barraBusqueda{
-    margin-left: 15% !important;
-    margin-top: 10%;
-    width: 100%;
-    height: 25%;
-}
 
-.barraBusqueda input[type="text"]{
-    width: 100%;
-}
-
-#search{
+.search{
     border:none;
-    border-bottom: 1px solid white;
     background: transparent;
     outline: none;
     height: 40px;
     color: white;
     font-size: 16px;
+    width: 10%;
+    float: right;
+    margin-top: -5%;
+}
+
+.search form{
+    width: 100%;
+    height: 100%;
+}
+
+.search form input[type=text]{
+    width: 100%;
+    border: none;
+    height: 100%;
+    border-radius: 300px;
+    padding: 2%;
 }
 
 #barraBusquedaComentarios{
@@ -212,3 +193,321 @@ main form input[type="submit"]:hover{
     width: 100%;
 }
 
+/**
+ * Oscuro: #283035
+ * Azul: #03658c
+ * Detalle: #c7cacb
+ * Fondo: #dee1e3
+ ----------------------------------*/
+ * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a {
+    color: #03658c;
+    text-decoration: none;
+}
+
+ul {
+   list-style-type: none;
+}
+
+body {
+   font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
+   background: #dee1e3;
+}
+
+/** ====================
+* Lista de Comentarios
+=======================*/
+.comments-container {
+   margin: 60px auto 15px;
+   width: 768px;
+}
+
+.comments-container h1 {
+   font-size: 36px;
+   color: #283035;
+   font-weight: 400;
+}
+
+.comments-container h1 a {
+   font-size: 18px;
+   font-weight: 700;
+}
+
+.comments-list {
+   margin-top: 30px;
+   position: relative;
+}
+
+/**
+* Lineas / Detalles
+-----------------------*/
+.comments-list:before {
+   content: '';
+   width: 2px;
+   height: 100%;
+   background: #c7cacb;
+   position: absolute;
+   left: 32px;
+   top: 0;
+}
+
+.comments-list:after {
+   content: '';
+   position: absolute;
+   background: #c7cacb;
+   bottom: 0;
+   left: 27px;
+   width: 7px;
+   height: 7px;
+   border: 3px solid #dee1e3;
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   border-radius: 50%;
+}
+
+.reply-list:before, .reply-list:after {display: none;}
+.reply-list li:before {
+   content: '';
+   width: 60px;
+   height: 2px;
+   background: #c7cacb;
+   position: absolute;
+   top: 25px;
+   left: -55px;
+}
+
+
+.comments-list li {
+   margin-bottom: 15px;
+   display: block;
+   position: relative;
+}
+
+.comments-list li:after {
+   content: '';
+   display: block;
+   clear: both;
+   height: 0;
+   width: 0;
+}
+
+.reply-list {
+   padding-left: 88px;
+   clear: both;
+   margin-top: 15px;
+}
+/**
+* Avatar
+---------------------------*/
+.comments-list .comment-avatar {
+   width: 65px;
+   height: 65px;
+   position: relative;
+   z-index: 99;
+   float: left;
+   border: 3px solid #FFF;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   overflow: hidden;
+}
+
+.comments-list .comment-avatar img {
+   width: 100%;
+   height: 100%;
+}
+
+.reply-list .comment-avatar {
+   width: 50px;
+   height: 50px;
+}
+
+.comment-main-level:after {
+   content: '';
+   width: 0;
+   height: 0;
+   display: block;
+   clear: both;
+}
+/**
+* Caja del Comentario
+---------------------------*/
+.comments-list .comment-box {
+   width: 680px;
+   float: right;
+   position: relative;
+   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+   -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+   box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+.comments-list .comment-box:before, .comments-list .comment-box:after {
+   content: '';
+   height: 0;
+   width: 0;
+   position: absolute;
+   display: block;
+   border-width: 10px 12px 10px 0;
+   border-style: solid;
+   border-color: transparent #FCFCFC;
+   top: 8px;
+   left: -11px;
+}
+
+.comments-list .comment-box:before {
+   border-width: 11px 13px 11px 0;
+   border-color: transparent rgba(0,0,0,0.05);
+   left: -12px;
+}
+
+.reply-list .comment-box {
+   width: 610px;
+}
+.comment-box .comment-head {
+   background: #FCFCFC;
+   padding: 10px 12px;
+   border-bottom: 1px solid #E5E5E5;
+   overflow: hidden;
+   -webkit-border-radius: 4px 4px 0 0;
+   -moz-border-radius: 4px 4px 0 0;
+   border-radius: 4px 4px 0 0;
+}
+
+.comment-box .comment-head i {
+   float: right;
+   margin-left: 14px;
+   position: relative;
+   top: 2px;
+   color: #A6A6A6;
+   cursor: pointer;
+   -webkit-transition: color 0.3s ease;
+   -o-transition: color 0.3s ease;
+   transition: color 0.3s ease;
+}
+
+.comment-box .comment-head i:hover {
+   color: #03658c;
+}
+
+.comment-box .comment-name {
+   color: #283035;
+   font-size: 14px;
+   font-weight: 700;
+   float: left;
+   margin-right: 10px;
+}
+
+.comment-box .comment-name a {
+   color: #283035;
+}
+
+.comment-box .comment-head span {
+   float: left;
+   color: #999;
+   font-size: 13px;
+   position: relative;
+   top: 1px;
+}
+
+.comment-box .comment-content {
+   background: #FFF;
+   padding: 12px;
+   font-size: 15px;
+   color: #595959;
+   -webkit-border-radius: 0 0 4px 4px;
+   -moz-border-radius: 0 0 4px 4px;
+   border-radius: 0 0 4px 4px;
+}
+
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a,  input[type=submit] {color: #03658c;}
+.comment-box .comment-name.by-author:after, input[type=submit] {
+   content: 'AUTOR';
+   background: #03658c;
+   color: #FFF;
+   font-size: 12px;
+   padding: 3px 5px;
+   font-weight: 700;
+   margin-left: 10px;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+}
+
+/** =====================
+* Responsive
+========================*/
+@media only screen and (max-width: 766px) {
+   .comments-container {
+       width: 480px;
+   }
+
+   .comments-list .comment-box {
+       width: 390px;
+   }
+
+   .reply-list .comment-box {
+       width: 320px;
+   }
+}
+
+.eliminar{
+    float: right;
+}
+
+.publicar{
+    width: 100%;
+    height: 7%;
+}
+
+.publicar form{
+    width: 100%;
+    height: 100%;
+}
+
+.publicar form input[type="textarea"]{
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 1%;
+    margin-bottom: 1%;
+    border-radius: 300px;
+}
+
+#nombreUSER{
+    color: #03658c;
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }

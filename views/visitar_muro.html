@@ -12,6 +12,7 @@
         <div class="aux">
             <div id="data">
                 <h1>Este es el muro de , {{ user.name }} </h1>
+                <br/>
                 <form method="post" action="/addFriend">
                     <input type="submit" value="Seguir" >
                     <input name="email" type="hidden" value={{ user.email }}></input>
@@ -23,14 +24,22 @@
 
         <main>
             <div class="Muro">
-            % for p in reversed(user.publicaciones): 
-                <div class="publicacion">
-                    <p><strong>{{ p.nombre }}</strong></p>
-                    <p>{{ p.contenido}}</p>
-                    <p>{{ p.fecha }}</p>
-                </div>
-            % end
-            </div>
+                % for p in reversed(user.publicaciones): 
+                    <div class="comment-main-level">
+                        <!-- Contenedor del Comentario -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name by-author">{{ p.nombre }}</h6>
+                                <span>{{ p.fecha }}</span>
+                            </div>
+                            <div class="comment-content">
+                                {{ p.contenido}}
+                            </div>
+    
+                        </div>
+                    </div>
+                    <br/>
+                % end
 
         </main>
 

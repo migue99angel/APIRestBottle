@@ -11,16 +11,21 @@
     %if lista:
         <main>
             <div class="Muro">
-                % for a in reversed(lista): 
-                    <div class="publicacion">
-                        <p><strong>{{ a.name }}</strong></p>
-                        <form method="post" action="/buscar">
-                            <input type="submit" value="Ver su muro" >
-                            <input name="consulta" type="hidden" value={{a.name}} >
-                        </form>
+                % for a in reversed(lista):  
+                    <div class="comment-main-level">
+                        <!-- Contenedor del Comentario -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h4 id="nombreUSER">{{ a.name }}</h4>
+                                <form method="post" action="/buscar">
+                                    <input type="submit" value="Ver su muro" >
+                                    <input name="consulta" type="hidden" value={{a.name}} >
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                    <br/>
                 % end
-            </div>
         </main> 
     </body>
 </html
