@@ -26,12 +26,4 @@ class Usuario:
     def limpiarSeguidores(self):
         self.seguidores = []
 
-    def eliminarPublicacion(self,id):
-        aux = 0
-        for p in self.publicaciones:
-            if p.id == id:
-                self.publicaciones.pop(aux)
-                print "Se ha eliminado la publicacion"
-            else:
-                aux = aux + 1
                 
