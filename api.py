@@ -92,9 +92,8 @@ def registro():
         password = request.forms.get('password')
         email = request.forms.get('email')
         base.registrarUsuario(user,password,email)
-        
     else:
-        return '<h1>Algo ha salido mal :(</h1>'
+        return template('views/index',error=2)
 
 
 @post('/login')
@@ -196,6 +195,14 @@ def comentarPublicacion():
     else:
         usuario = base.cargarMuro(request.forms.get('nombreMuro'))   
         return obtenerUser(usuario)
+
+@post('/eliminarComentario')
+def eliminarComentario():
+    if request.forms.get('id') != None:
+        request.environ['beaker.session']['user'] = base.eliminarComentario(request.environ['beaker.session']['user'],request.forms.get('id'))
+        return redirect('/')
+    else:
+        return '<h1>404 Not found</h1>'
 
 
 

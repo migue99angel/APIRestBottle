@@ -87,6 +87,10 @@
                                 </div>
                                 <div class="comment-content">
                                     {{ c.contenido }}
+                                    <form method="post" class="eliminar" action="/eliminarComentario">
+                                        <input type="submit" value="Eliminar" >
+                                        <input type="hidden" name="id" value={{c.id}}>
+                                    </form>
                                 </div>
                                 <br/>
                             </div>

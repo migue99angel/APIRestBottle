@@ -157,3 +157,8 @@ class conexionDB:
         self.cur.execute("INSERT INTO comentarios(email, nombre, fecha, contenido, idPublicacion) VALUES (%s, %s, %s, %s, %s)",((email, name, fecha, contenido,id)))
         self.db.commit()
         return self.cargarPublicaciones(user)
+
+    def eliminarComentario(self,usuario,id):
+        self.cur.execute("DELETE FROM comentarios WHERE idComentario=%s",[id])
+        self.db.commit()
+        return self.cargarPublicaciones(usuario)
