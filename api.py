@@ -28,7 +28,7 @@ def index():
         if request.environ['beaker.session']['logged'] == False :
             return template('views/index',error=0)
         else:
-            return template('views/usuario',logged=request.environ['beaker.session']['user'])
+            return template('views/usuario',logged=request.environ['beaker.session']['user'],error=0)
     else:
         return template('views/index',error=0)
 
@@ -46,6 +46,7 @@ def stylesheets(filename):
 def getUserPost():
     user = request.forms.get('consulta')
     usuario = base.cargarMuro(user) 
+    
     return obtenerUser(usuario)
 
 
@@ -168,7 +169,7 @@ def verAmigos():
     return template('views/lista_usuarios',lista=request.environ['beaker.session']['user'].amigos)
 
 @post('/verSeguidores')
-def verAmigos():
+def verSeguidores():
     return template('views/lista_usuarios',lista=request.environ['beaker.session']['user'].seguidores)
 
 
@@ -203,7 +204,7 @@ def eliminarComentario():
         request.environ['beaker.session']['user'] = base.eliminarComentario(request.environ['beaker.session']['user'],request.forms.get('id'))
         return redirect('/')
     else:
-        return '<h1>404 Not found</h1>'
+        return template('views/usuario',logged=request.environ['beaker.session']['user'],error=4)
 
 
 
@@ -212,7 +213,7 @@ def obtenerUser(usuario):
         seguido = request.environ['beaker.session']['user'].sigueA(usuario)
         return template('views/visitar_muro',user=usuario,seguido=seguido)
     else:
-        return '<h1>404 Not found</h1>'
+        return template('views/usuario',logged=request.environ['beaker.session']['user'],error=4)
 
 
 
