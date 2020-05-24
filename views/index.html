@@ -60,6 +60,12 @@
                 Las contraseñas no coinciden
             </div>
         %end
+        %if error == 3:
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            Por motivos de seguridad, si cambias el nombre de usuario debes iniciar sesión de nuevo
+        </div>
+        %end
     %end
 
 

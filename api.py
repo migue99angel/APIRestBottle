@@ -56,7 +56,7 @@ def actualizarPerfil():
     if new_name != None:
         base.actualizarPerfil(request.environ['beaker.session']['user'],new_name)
         request.environ['beaker.session'].delete()
-        return redirect('/')
+        return template('views/index',error=3)
     else:
         return '<h1>Algo ha pasado...</h1>'
 
@@ -92,6 +92,7 @@ def registro():
         password = request.forms.get('password')
         email = request.forms.get('email')
         base.registrarUsuario(user,password,email)
+        return redirect('/')
     else:
         return template('views/index',error=2)
 
