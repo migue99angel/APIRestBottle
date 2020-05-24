@@ -11,13 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 import java.io.IOException;
-import java.sql.*;
-import java.util.Iterator;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean identificado = false;
     private String email = null;
-
-    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
